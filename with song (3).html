@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Bryce!</title>
+  <style>
+    .glow-text {
+      color: #ff5e78;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ff5e78, 0 0 30px #ff5e78;
+    }
+
+    .pulse {
+      display: inline-block;
+      animation: pulseEffect 1.5s infinite;
+    }
+
+    @keyframes pulseEffect {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom right, #ffd6e0, #ffeaa7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .background {
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff5e78;
+      font-size: 2.5rem;
+      margin-top: 20px;
+      text-shadow: 2px 2px white;
+    }
+
+    .cake {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+    }
+
+    .layer {
+      width: 200px;
+      height: 50px;
+      background: #ff9aa2;
+      border-radius: 10px;
+      position: relative;
+      margin-bottom: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .layer-middle {
+      background: #f6a6b2;
+    }
+
+    .layer-top {
+      background: #fcbad3;
+    }
+
+    .candle {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 40px;
+      background: #ff6f61;
+      border-radius: 5px;
+    }
+
+    .flame {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 15px;
+      height: 15px;
+      background: yellow;
+      border-radius: 50%;
+      animation: flicker 1s infinite alternate;
+    }
+
+    @keyframes flicker {
+      from {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(-50%) scale(1.2);
+        opacity: 0.8;
+      }
+    }
+
+    .surprise-btn {
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff69b4;
+      margin-bottom: 20px;
+    }
+
+    .love-note {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff0f5;
+      border: 3px solid #ff69b4;
+      padding: 30px;
+      border-radius: 15px;
+      font-family: 'Comic Sans MS', cursive;
+      box-shadow: 0 0 20px #ff69b4;
+      z-index: 1000;
+    }
+
+    .love-note p {
+      font-size: 1.2rem;
+      color: #ff1493;
+      margin: 0;
+    }
+
+    .close-note {
+      margin-top: 15px;
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .volume-control {
+      margin-top: 15px;
+    }
+
+    input[type="range"] {
+      width: 200px;
+      height: 8px;
+      background: #ffc0cb;
+      border-radius: 5px;
+      outline: none;
+      box-shadow: 0 0 5px #ff69b4;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      background: #ff69b4;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 5px #ff1493;
+    }
+    input[type=range] {
+  width: 200px;
+  height: 6px;
+  background: pink;
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #ff69b4;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #ff69b4;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* behind everything */
+  pointer-events: none;
+}
+
+  </style>
+</head>
+<body>
+  <canvas id="hearts"></canvas>
+
+
+  <!-- Cake + Text -->
+  <div class="background">
+    <div class="cake">
+      <div class="layer layer-bottom"></div>
+      <div class="layer layer-middle"></div>
+      <div class="layer layer-top"></div>
+      <div class="candle">
+        <div class="flame"></div>
+      </div>
+    </div>
+    <h1 class="glow-text">Happy Birthday <span class="pulse">Bryce!</span></h1>
+    
+    <!-- Click Me Button -->
+  <button onclick="showMessage()" class="surprise-btn">Click me!</button>
+  <button onclick="playSong()" style="padding: 12px 20px; background: hotpink; color: white; border: none; border-radius: 10px; font-size: 1rem; cursor: pointer;">
+    Play Song
+  </button>
+
+  
+
+    <!-- Audio Player and Range -->
+    <audio id="birthdaySong" loop>
+      <source src="SWV - Use Your Heart.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>          
+      
+     
+    <div class="volume-control">
+      <label for="volumeSlider" style="color: #ff5e78;">Volume: </label>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+    </div>
+  </div>
+
+  <!-- Love Note Pop-up -->
+  <div class="love-note" id="loveNote">
+    <p id="typedText"></p>
+  </p>
+    <button class="close-note" onclick="hideMessage()">Awww</button>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function showMessage() {
+      document.getElementById("loveNote").style.display = "block";
+    }
+    let message = ">Happy 19th birthday my love! I cant even begin to describe how lucky i am to have u in my life, u are so sweet, kind, and always there for me, even when we r miles apart. from playing Roblox to watching movies together, u make every moment feel special. u are the first person i think of when im feeling down, and just hearing from u makes everything better. Im so grateful for u and everything u do for me, u are the first person who loves every part of me, and i love u more than words can say im so proud to call u mine. Wishing u the happiest birthday ever gazie!💗.";
+let i = 0;
+function typeWriter() {
+  if (i < message.length) {
+    document.getElementById("typedText").innerHTML += message.charAt(i);
+    i++;
+    setTimeout(typeWriter, 40);
+  }
+}
+document.getElementById("typedText").innerHTML = "";
+typeWriter();
+
+    function hideMessage() {
+      document.getElementById("loveNote").style.display = "none";
+    }
+    
+    function playSong() {
+  const audio = document.getElementById("birthdaySong");
+  audio.play();
+}
+
+    // Volume Control
+    const audio = document.getElementById('birthdaySong');
+    const volumeSlider = document.getElementById('volumeSlider');
+    volumeSlider.addEventListener('input', function() {
+      audio.volume = this.value;
+    });
+
+</script>
+<script>
+  const canvas = document.getElementById('hearts');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const hearts = [];
+
+  class Heart {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height + 20;
+      this.size = Math.random() * 10 + 10;
+      this.speedY = Math.random() * 1 + 0.5;
+      this.opacity = Math.random();
+    }
+    draw() {
+      ctx.globalAlpha = this.opacity;
+      ctx.fillStyle = '#ff69b4';
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.bezierCurveTo(this.x + this.size / 2, this.y - this.size, this.x + this.size * 1.5, this.y + this.size / 2, this.x, this.y + this.size);
+      ctx.bezierCurveTo(this.x - this.size * 1.5, this.y + this.size / 2, this.x - this.size / 2, this.y - this.size, this.x, this.y);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    update() {
+      this.y -= this.speedY;
+    }
+  }
+
+  function handleHearts() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (hearts.length < 100) hearts.push(new Heart());
+    for (let i = 0; i < hearts.length; i++) {
+      hearts[i].update();
+      hearts[i].draw();
+      if (hearts[i].y < 0) hearts.splice(i, 1);
+    }
+    requestAnimationFrame(handleHearts);
+  }
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  handleHearts();
+</script>
+
+
+</body>
+</html>
